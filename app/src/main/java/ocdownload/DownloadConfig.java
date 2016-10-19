@@ -17,6 +17,8 @@ public class DownloadConfig {
     public final static String TASK_DATA = "TASK_DATA";
     public final static String TASK_ACTION = "NEW_TASK";
 
+    public final static String TASK_STOP_ACTION = "TASK_STOP_ACTION";
+
     //service update intent action
     public static final String SINGLE_FINISH_UPDATE = "update_singel_finish";
     public static final String SINGLE_UPDATE = "update_singel";
@@ -32,4 +34,14 @@ public class DownloadConfig {
     public static final int WAITTING = 2;
     public static final int DOWNLOADING = 3;
     public static final int FINISH = 4;
+
+    //single service
+    public static final String SINGLE_SERVICE_SINGLE_FINISH_UPDATE = "singel_service_update_singel_finish";
+    public static final String SINGLE_SERVICE_SINGLE_UPDATE = "singel_service_update_singel";
+    public static final String SINGLE_SERVICE_ALL_UPDATE = "singel_service_update_all";
+    public static final String SINGLE_SERVICE_SINGLE_DELETE = "singel_service_update_singel_delete";
+
+    //priority
+    public static final int PRIORITY_NORMAL = 0;
+    public static final int PRIORITY_TOP = 1;
 }

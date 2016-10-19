@@ -61,4 +61,9 @@ public class FileLoader {
         context.startService(intent);
     }
 
+//    public void stopDownloadFile() {
+//        Intent intent = new Intent(context, SingleDownloadService.class);
+//        intent.setAction(DownloadConfig.TASK_STOP_ACTION);
+//        context.startService(intent);
+//    }
 }

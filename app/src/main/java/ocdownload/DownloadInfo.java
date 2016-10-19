@@ -15,8 +15,11 @@ public class DownloadInfo implements Serializable{
     private long fileSize = 0L;
     private String fileMD5;
     private int filePage;
-    private int fileIdType;
-    private int fileType;
+    private int fileIdType;//1原文 2p文
+    private int fileType; //1正文 2附近
+
+
+    //当fileIdType和filetype同时为2, 不显示在下载列表里
 
     public DownloadInfo() {
     }
@@ -29,6 +32,8 @@ public class DownloadInfo implements Serializable{
         this.filePath = "";
         this.userID = "test";
         this.fileID = fileID;
+        this.fileIdType = 2;
+        this.fileType = 2;
     }
 
     public DownloadInfo(String title, String url, String userID, String fileID, long fileSize, int filePage, int fileIdType, int fileType) {
@@ -158,4 +163,5 @@ public class DownloadInfo implements Serializable{
     public void setFileType(int fileType) {
         this.fileType = fileType;
     }
+
 }

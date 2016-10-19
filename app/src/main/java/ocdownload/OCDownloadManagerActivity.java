@@ -88,8 +88,13 @@ public class OCDownloadManagerActivity extends AppCompatActivity implements OCDo
      */
     @Override
     public void onRecycleViewClick(DownloadInfo bean) {
-        if (downloadService != null){
-            downloadService.clickTask(bean,false);
+        if (bean.getStatus() == DownloadConfig.FINISH) {
+
+        }
+        else {
+            if (downloadService != null) {
+                downloadService.clickTask(bean, false);
+            }
         }
     }
 
@@ -173,13 +178,12 @@ public class OCDownloadManagerActivity extends AppCompatActivity implements OCDo
 
         //解绑接收器
         broadcastManager.unregisterReceiver(updateHandler);
-
         //解绑服务
         unbindService(serviceConnection);
     }
 
     private void findData() {
-        downloadInfos.addAll(FileSQLManager.getInstance(this).getUserDownLoadInfo(DownloadConfig.userID));
+        downloadInfos.addAll(FileSQLManager.getInstance(this).getUserDownLoadInfoWhileFileTypeAndFileIDTypeEqual2(DownloadConfig.userID));
         downloadAdapter.notifyDataSetChanged();
     }
 

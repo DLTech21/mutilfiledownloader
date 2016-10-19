@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         t5.setOnClickListener(this);
         dl.setOnClickListener(this);
         SQLiteDatabase.loadLibs(this);
+        t1.setTextSize(100);
     }
 
     @Override
@@ -60,8 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_task_2:
                 Intent intent2 = new Intent(this,DownloadService.class);
                 intent2.setAction(DownloadConfig.TASK_ACTION);
-                DownloadInfo downloadInfo2 = new DownloadInfo("QQAndroid.apk", "http://sqdd.myapp.com/myapp/qqteam/AndroidQQ/mobileqq_android.apk", "t2");
-                intent2.putExtra(DownloadConfig.TASK_DATA, downloadInfo2);
+                DownloadInfo downloadInfo2 = new DownloadInfo("QQAndroid.apk", "https://v218.evergrande.cn/api.php?service=aprv.file.pdfView&params[app_id]=3236&params[file_id]=6818&access_token=V0xf4Bi2n16R3G2DkMr4XNOorF6DkbA", "t2");
+                list.add(downloadInfo2);
+                intent2.putExtra(DownloadConfig.TASK_DATA, list);
                 startService(intent2);
                 break;
             case R.id.button_task_3:

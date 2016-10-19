@@ -84,7 +84,7 @@ public class FileSQLManager {
         db = dbhelper.getWritableDatabase("123456");
         Cursor cursor = db.rawQuery(
                 "SELECT * from " + SQLiteHelper.TABLE_NAME
-                        + "WHERE user_id = ? AND file_id = ? ", new String[]{userID, fileID});
+                        + " WHERE user_id = ? AND file_id = ? ", new String[]{userID, fileID});
         if(cursor.moveToNext()){
             downloadinfo = new DownloadInfo();
             downloadinfo.setDownloadedSize(cursor.getLong(cursor.getColumnIndex("downloadsize")));
@@ -103,6 +103,43 @@ public class FileSQLManager {
         cursor.close();
         db.close();
         return downloadinfo;
+    }
+
+    /**
+     * 获取filetype和fileidtype都是2的下载任务
+     * @param userID
+     * @return
+     */
+    public ArrayList<DownloadInfo> getUserDownLoadInfoWhileFileTypeAndFileIDTypeEqual2(String userID) {
+        ArrayList<DownloadInfo> downloadinfoList = new ArrayList<DownloadInfo>();
+        db = dbhelper.getWritableDatabase("123456");
+        try {
+            Cursor cursor = null;
+            cursor = db.rawQuery(
+                    "SELECT * from " + SQLiteHelper.TABLE_NAME + " WHERE user_id = ? AND file_type = ? AND file_id_type = ?", new String[]{userID, "2", "2"});
+            while (cursor.moveToNext()) {
+                DownloadInfo downloadinfo = new DownloadInfo();
+                downloadinfo.setDownloadedSize(cursor.getLong(cursor.getColumnIndex("downloadsize")));
+                downloadinfo.setTitle(cursor.getString(cursor.getColumnIndex("file_name")));
+                downloadinfo.setFilePath(cursor.getString(cursor.getColumnIndex("file_local_path")));
+                downloadinfo.setFileSize(cursor.getLong(cursor.getColumnIndex("file_size")));
+                downloadinfo.setFilePage(cursor.getInt(cursor.getColumnIndex("file_page")));
+                downloadinfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+                downloadinfo.setFileID(cursor.getString(cursor.getColumnIndex("file_id")));
+                downloadinfo.setUserID(cursor.getString(cursor.getColumnIndex("user_id")));
+                downloadinfo.setFileIdType(cursor.getInt(cursor.getColumnIndex("file_id_type")));
+                downloadinfo.setFileType(cursor.getInt(cursor.getColumnIndex("file_type")));
+                downloadinfo.setStatus(cursor.getInt(cursor.getColumnIndex("file_download_status")));
+                downloadinfo.setFileMD5(cursor.getString(cursor.getColumnIndex("file_md5")));
+                downloadinfoList.add(downloadinfo);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        db.close();
+        return downloadinfoList;
     }
 
     public ArrayList<DownloadInfo> getUserDownLoadInfo(String userID){
@@ -143,7 +180,7 @@ public class FileSQLManager {
         try {
             Cursor cursor = null;
             cursor = db.rawQuery(
-                    "SELECT * from " + SQLiteHelper.TABLE_NAME + "WHERE user_id = ? AND file_download_status != ? ", new String[]{userID, DownloadConfig.FINISH+""});
+                    "SELECT * from " + SQLiteHelper.TABLE_NAME + " WHERE user_id = ? AND file_download_status != ? ", new String[]{userID, DownloadConfig.FINISH+""});
             while(cursor.moveToNext()){
                 DownloadInfo downloadinfo = new DownloadInfo();
                 downloadinfo.setDownloadedSize(cursor.getLong(cursor.getColumnIndex("downloadsize")));
@@ -175,7 +212,7 @@ public class FileSQLManager {
         try {
             Cursor cursor = null;
             cursor = db.rawQuery(
-                    "SELECT * from " + SQLiteHelper.TABLE_NAME + "WHERE user_id = ? AND file_download_status = ? ", new String[]{userID, DownloadConfig.FINISH+""});
+                    "SELECT * from " + SQLiteHelper.TABLE_NAME + " WHERE user_id = ? AND file_download_status = ? ", new String[]{userID, DownloadConfig.FINISH+""});
             while(cursor.moveToNext()){
                 DownloadInfo downloadinfo = new DownloadInfo();
                 downloadinfo.setDownloadedSize(cursor.getLong(cursor.getColumnIndex("downloadsize")));
@@ -207,7 +244,7 @@ public class FileSQLManager {
         try {
             Cursor cursor = null;
             cursor = db.rawQuery(
-                    "SELECT * from " + SQLiteHelper.TABLE_NAME + "WHERE user_id = ? AND file_download_status != ? AND file_type = ? ", new String[]{userID, DownloadConfig.FINISH+"", fileType+""});
+                    "SELECT * from " + SQLiteHelper.TABLE_NAME + " WHERE user_id = ? AND file_download_status != ? AND file_type = ? ", new String[]{userID, DownloadConfig.FINISH+"", fileType+""});
             while(cursor.moveToNext()){
                 DownloadInfo downloadinfo = new DownloadInfo();
                 downloadinfo.setDownloadedSize(cursor.getLong(cursor.getColumnIndex("downloadsize")));
@@ -239,7 +276,7 @@ public class FileSQLManager {
         try {
             Cursor cursor = null;
             cursor = db.rawQuery(
-                    "SELECT * from " + SQLiteHelper.TABLE_NAME + "WHERE user_id = ? AND file_download_status = ? AND file_type = ? ", new String[]{userID, DownloadConfig.FINISH+"", fileType+""});
+                    "SELECT * from " + SQLiteHelper.TABLE_NAME + " WHERE user_id = ? AND file_download_status = ? AND file_type = ? ", new String[]{userID, DownloadConfig.FINISH+"", fileType+""});
             while(cursor.moveToNext()){
                 DownloadInfo downloadinfo = new DownloadInfo();
                 downloadinfo.setDownloadedSize(cursor.getLong(cursor.getColumnIndex("downloadsize")));

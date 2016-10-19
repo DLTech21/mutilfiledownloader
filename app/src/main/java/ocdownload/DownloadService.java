@@ -92,16 +92,15 @@ public class DownloadService extends Service{
         return new GetServiceClass();
     }
 
-//    @Override
-//    public boolean onUnbind(Intent intent) {
-//        Log.d(TAG, "onUnbind");
-//        keepAlive = false;
-//        if (threadExecutor.getActiveCount() <= 0 && saveDownloadList()){
-//            //如果解除bind的时候，已经没有正在运行的任务，保存状态成功，则结束服务
-//            stopSelf();
-//        }
-//        return super.onUnbind(intent);
-//    }
+    @Override
+    public boolean onUnbind(Intent intent) {
+        keepAlive = false;
+        if (threadExecutor.getActiveCount() <= 0 && saveDownloadList()){
+            //如果解除bind的时候，已经没有正在运行的任务，保存状态成功，则结束服务
+            stopSelf();
+        }
+        return super.onUnbind(intent);
+    }
 //
 //    @Override
 //    public void onRebind(Intent intent) {
@@ -157,7 +156,8 @@ public class DownloadService extends Service{
      */
     private synchronized boolean checkTask(@Nullable DownloadInfo requestBean){
         if (requestBean != null){
-
+            DownloadConfig.userID = requestBean.getUserID();
+            FileHelper.newDirFile(new File(DownloadConfig.dowloadFilePath));
             //先检查是否存在同名的文件
             if (new File(DownloadConfig.dowloadFilePath+"/"+requestBean.getTitle()).exists()){
                 Toast.makeText(DownloadService.this,"File is already downloaded", Toast.LENGTH_SHORT).show();
